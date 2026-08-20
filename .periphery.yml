@@ -6,11 +6,13 @@
 # PENTING: scheme "ReminderApp" harus di-set Shared dulu di Xcode:
 #   Product > Scheme > Manage Schemes > centang "Shared" pada ReminderApp
 # Tanpa ini, Periphery tidak bisa build project untuk dianalisis.
+#
+# Catatan: 'targets' sengaja tidak ditulis di sini — sejak Periphery 3.x,
+# target otomatis diambil dari scheme, menulis 'targets' manual malah
+# jadi invalid key.
 
 project: ReminderApp.xcodeproj
 schemes:
-  - ReminderApp
-targets:
   - ReminderApp
 report_exclude:
   - "*/Tests/*"
