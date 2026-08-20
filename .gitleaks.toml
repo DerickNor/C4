@@ -1,0 +1,21 @@
+title = "gitleaks config — Swift/iOS project"
+
+[extend]
+# keep gitleaks' large built-in ruleset (AWS keys, Stripe keys, generic
+# high-entropy tokens, etc.) and add project-specific rules on top
+useDefault = true
+
+# catch hardcoded secrets assigned to a Swift constant/variable, e.g.
+#   let apiKey = "AbCdEf123456..."
+[[rules]]
+id = "swift-hardcoded-secret"
+description = "Hardcoded secret assigned to a Swift let/var"
+regex = '''(?i)(let|var)\s+\w*(key|token|secret|password|apikey)\w*\s*[:=]\s*"[A-Za-z0-9_\-]{16,}"'''
+tags = ["swift", "secret"]
+
+[allowlist]
+paths = [
+  '''Tests/''',
+  '''.*Mock.*''',
+  '''.*Preview.*''',
+]

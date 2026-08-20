@@ -1,0 +1,36 @@
+# SwiftLint config — security & code-quality focused
+# Install:  brew install swiftlint
+# Run:      swiftlint lint
+# Docs:     https://github.com/realm/SwiftLint
+
+opt_in_rules:
+  - force_unwrapping
+  - force_try
+  - implicitly_unwrapped_optional
+  - fatal_error_message
+  - discouraged_optional_boolean
+
+disabled_rules:
+  - todo # don't fail the build on TODO comments
+
+# These map directly to the "unsafe networking" / "weak input validation"
+# checklist items — treat them as errors, not warnings.
+force_unwrapping:
+  severity: error
+force_try:
+  severity: error
+force_cast:
+  severity: error
+
+implicitly_unwrapped_optional:
+  severity: warning
+
+line_length:
+  warning: 120
+  error: 160
+
+excluded:
+  - Pods
+  - .build
+  - DerivedData
+  - "**/*Tests/*Mock*"

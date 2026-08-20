@@ -1,0 +1,42 @@
+# Copy this file to .github/workflows/security-checks.yml in your project repo.
+name: Security & Code Quality Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  security-checks:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Run SwiftLint
+        run: swiftlint lint --strict
+
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          config-path: .gitleaks.toml
+
+      - name: Check for disabled ATS (NSAllowsArbitraryLoads)
+        run: |
+          if grep -r "NSAllowsArbitraryLoads" --include="Info.plist" .; then
+            echo "::error::NSAllowsArbitraryLoads found — ATS disabled"
+            exit 1
+          fi
+
+      - name: Check for plain HTTP URLs
+        run: |
+          if grep -rn '"http://' --include="*.swift" .; then
+            echo "::error::Plain http:// URL found in Swift source"
+            exit 1
+          fi

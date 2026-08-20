@@ -1,0 +1,17 @@
+# Periphery — deteksi kode/dependency yang tidak terpakai (dead code)
+# Install: brew install periphery
+# Run:     periphery scan
+# Docs:    https://github.com/peripheryapp/periphery
+#
+# PENTING: scheme "ReminderApp" harus di-set Shared dulu di Xcode:
+#   Product > Scheme > Manage Schemes > centang "Shared" pada ReminderApp
+# Tanpa ini, Periphery tidak bisa build project untuk dianalisis.
+
+project: ReminderApp.xcodeproj
+schemes:
+  - ReminderApp
+targets:
+  - ReminderApp
+report_exclude:
+  - "*/Tests/*"
+  - "*/Preview Content/*"
