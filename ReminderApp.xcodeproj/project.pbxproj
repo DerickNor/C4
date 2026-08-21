@@ -6,14 +6,39 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1DBFBABDF28D6440256CF8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84DA11DCC920CFF8A0469BAE /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7FFEB6A3DC65C1CBD01571A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 32F545C63036E3D0002F69F5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 32F545CD3036E3D0002F69F5;
+			remoteInfo = ReminderApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		32F545CE3036E3D0002F69F5 /* ReminderApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReminderApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84DA11DCC920CFF8A0469BAE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		F0ACE92EE956985B9E494D79 /* ReminderAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = ReminderAppTests.xctest; path = ReminderAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		32F545D03036E3D0002F69F5 /* ReminderApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = ReminderApp;
+			sourceTree = "<group>";
+		};
+		85249BCF7E9930F5B91ED190 /* ReminderAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = ReminderAppTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -26,6 +51,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		45A536616DA085B060860252 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DBFBABDF28D6440256CF8E5 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -34,6 +67,8 @@
 			children = (
 				32F545D03036E3D0002F69F5 /* ReminderApp */,
 				32F545CF3036E3D0002F69F5 /* Products */,
+				677A5A6F70A415FF7930EE8D /* Frameworks */,
+				85249BCF7E9930F5B91ED190 /* ReminderAppTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -41,8 +76,25 @@
 			isa = PBXGroup;
 			children = (
 				32F545CE3036E3D0002F69F5 /* ReminderApp.app */,
+				F0ACE92EE956985B9E494D79 /* ReminderAppTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		677A5A6F70A415FF7930EE8D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				96B1A8FCB052000F5CDE1896 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		96B1A8FCB052000F5CDE1896 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				84DA11DCC920CFF8A0469BAE /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -64,11 +116,30 @@
 				32F545D03036E3D0002F69F5 /* ReminderApp */,
 			);
 			name = ReminderApp;
-			packageProductDependencies = (
-			);
 			productName = ReminderApp;
 			productReference = 32F545CE3036E3D0002F69F5 /* ReminderApp.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B5A640FA88C15161490ADF15 /* ReminderAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5FBA67A2FE640DD69E7B4FC /* Build configuration list for PBXNativeTarget "ReminderAppTests" */;
+			buildPhases = (
+				12A89E9971A23AD32D855D80 /* Sources */,
+				45A536616DA085B060860252 /* Frameworks */,
+				F95AE02D0034EBE9CCA2150E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E855B2C25DA2E1002F8B07CA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				85249BCF7E9930F5B91ED190 /* ReminderAppTests */,
+			);
+			name = ReminderAppTests;
+			productName = ReminderAppTests;
+			productReference = F0ACE92EE956985B9E494D79 /* ReminderAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -100,6 +171,7 @@
 			projectRoot = "";
 			targets = (
 				32F545CD3036E3D0002F69F5 /* ReminderApp */,
+				B5A640FA88C15161490ADF15 /* ReminderAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -112,9 +184,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F95AE02D0034EBE9CCA2150E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		12A89E9971A23AD32D855D80 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		32F545CA3036E3D0002F69F5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -123,6 +209,15 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E855B2C25DA2E1002F8B07CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ReminderApp;
+			target = 32F545CD3036E3D0002F69F5 /* ReminderApp */;
+			targetProxy = 7FFEB6A3DC65C1CBD01571A4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		32F545D73036E3D0002F69F5 /* Debug */ = {
@@ -318,6 +413,41 @@
 			};
 			name = Release;
 		};
+		E59C7E9C1A066CCCE0A52FB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dericknorlan.ReminderAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReminderApp.app/ReminderApp";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EB739E8F78C9763F8F2897C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dericknorlan.ReminderAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReminderApp.app/ReminderApp";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -335,6 +465,15 @@
 			buildConfigurations = (
 				32F545DA3036E3D0002F69F5 /* Debug */,
 				32F545DB3036E3D0002F69F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C5FBA67A2FE640DD69E7B4FC /* Build configuration list for PBXNativeTarget "ReminderAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E59C7E9C1A066CCCE0A52FB1 /* Release */,
+				EB739E8F78C9763F8F2897C6 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
