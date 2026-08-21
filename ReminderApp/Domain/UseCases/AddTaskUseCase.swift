@@ -13,12 +13,12 @@
 //
 import Foundation
 
-enum ValidationError: Error, Equatable {
+nonisolated enum ValidationError: Error, Equatable {
     case emptyTitle
     case pastDueDate
 }
 
-struct AddTaskUseCase {
+nonisolated struct AddTaskUseCase {
     private let repository: TaskRepositoryProtocol
     private let scheduler: NotificationSchedulerProtocol
 

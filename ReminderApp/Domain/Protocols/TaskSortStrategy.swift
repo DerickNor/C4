@@ -12,6 +12,6 @@
 //    setiap urutan baru berarti menambah case di switch.
 //
 
-protocol TaskSortStrategy {
+nonisolated protocol TaskSortStrategy {
     func sort(_ tasks: [ReminderTask]) -> [ReminderTask]
 }
