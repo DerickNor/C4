@@ -11,3 +11,8 @@
 //    menyimpan, jadi tidak dipaksa menerima scheduler yang tak dipakainya.
 //  • DIP — Domain tidak pernah menyentuh UNUserNotificationCenter langsung.
 //
+
+protocol NotificationSchedulerProtocol {
+    func schedule(for task: ReminderTask) async throws
+    func cancel(for task: ReminderTask)
+}
