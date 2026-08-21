@@ -7,13 +7,21 @@
 #   Product > Scheme > Manage Schemes > centang "Shared" pada ReminderApp
 # Tanpa ini, Periphery tidak bisa build project untuk dianalisis.
 #
-# Catatan: 'targets' sengaja tidak ditulis di sini — sejak Periphery 3.x,
-# target otomatis diambil dari scheme, menulis 'targets' manual malah
-# jadi invalid key.
+# CI (`.github/workflows/periphery.yml`) menjalankan `brew install periphery`
+# tanpa versi terkunci, jadi versi yang terpasang bisa berubah kapan saja
+# mengikuti Homebrew. Config ini ditulis untuk skema CLI 3.x (`--schemes`
+# menentukan apa yang di-scan; `--targets` sudah dihapus di versi ini —
+# menuliskannya jadi invalid key). Kalau suatu saat CI kembali memakai
+# CLI 2.x, `--targets` wajib diisi lagi — cek dulu dengan `periphery
+# version` sebelum mengubah, jangan asumsikan.
+#
+# exclude_tests: true supaya tipe yang cuma dipakai test (mock, spy) tidak
+# ditandai dead code — pengganti pola report_exclude lama yang sudah basi
+# sejak folder test pindah dari ReminderApp/Tests/ ke ReminderAppTests/.
 
 project: ReminderApp.xcodeproj
 schemes:
   - ReminderApp
+exclude_tests: true
 report_exclude:
-  - "*/Tests/*"
   - "*/Preview Content/*"

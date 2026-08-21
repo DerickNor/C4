@@ -16,5 +16,5 @@ jobs:
 
       - name: Run Periphery
         run: |
-          periphery scan --config .periphery.yml --format github-actions \
+          periphery scan --config .periphery.yml --format github-actions --relative-results \
             -- -destination "generic/platform=iOS Simulator"
