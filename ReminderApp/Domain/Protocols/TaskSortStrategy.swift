@@ -11,3 +11,7 @@
 //    TaskListViewModel tidak pernah dibuka lagi. Tanpa protocol ini,
 //    setiap urutan baru berarti menambah case di switch.
 //
+
+protocol TaskSortStrategy {
+    func sort(_ tasks: [ReminderTask]) -> [ReminderTask]
+}
