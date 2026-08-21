@@ -11,9 +11,6 @@
 //    menjadwalkan milik Scheduler.
 //  • DIP — kedua dependency masuk lewat init() sebagai protocol.
 //
-//  Status: stub TDD 🔴 — execute() belum diisi (fatalError), menunggu
-//  AddTaskUseCaseTests jadi merah dulu sebelum logic aslinya ditulis.
-
 import Foundation
 
 enum ValidationError: Error, Equatable {
@@ -31,6 +28,17 @@ struct AddTaskUseCase {
     }
 
     func execute(title: String, dueDate: Date) async throws -> ReminderTask {
-        fatalError("not implemented")
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedTitle.isEmpty else {
+            throw ValidationError.emptyTitle
+        }
+        guard dueDate >= Date() else {
+            throw ValidationError.pastDueDate
+        }
+
+        let task = ReminderTask(title: trimmedTitle, dueDate: dueDate)
+        try repository.save(task)
+        try await scheduler.schedule(for: task)
+        return task
     }
 }
