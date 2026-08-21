@@ -22,6 +22,8 @@
 final class MockNotificationScheduler: NotificationSchedulerProtocol {
     private let log: MockCallLog
 
+    var calls: [MockCallLog.Entry] { log.entries }
+
     init(log: MockCallLog = MockCallLog()) {
         self.log = log
     }
