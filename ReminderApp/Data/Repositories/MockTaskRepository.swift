@@ -13,7 +13,7 @@
 //  • DIP — bukti bahwa UseCase memang bergantung ke protocol, bukan ke SwiftData.
 //
 
-final class MockTaskRepository: TaskRepositoryProtocol {
+nonisolated final class MockTaskRepository: TaskRepositoryProtocol {
     private let log: MockCallLog
     private var tasks: [ReminderTask]
 

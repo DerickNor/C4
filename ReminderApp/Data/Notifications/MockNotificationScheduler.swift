@@ -19,7 +19,7 @@
 //  DIP bikin penggantian ini mungkin, LSP bikin hasilnya bisa dipercaya.
 //
 
-final class MockNotificationScheduler: NotificationSchedulerProtocol {
+nonisolated final class MockNotificationScheduler: NotificationSchedulerProtocol {
     private let log: MockCallLog
 
     var calls: [MockCallLog.Entry] { log.entries }

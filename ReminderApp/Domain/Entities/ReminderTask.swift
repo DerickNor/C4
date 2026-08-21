@@ -13,7 +13,7 @@
 
 import Foundation
 
-struct ReminderTask: Identifiable, Equatable {
+nonisolated struct ReminderTask: Identifiable, Equatable {
     let id: UUID
     // title dan dueDate sengaja `let` — mengedit task setelah dibuat di luar
     // scope (lihat requirements.md § Out of Scope). Hanya pin/complete yang

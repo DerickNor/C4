@@ -12,7 +12,7 @@
 //  • LSP — semua implementasinya wajib berperilaku sama terhadap kontrak ini.
 //
 
-protocol TaskRepositoryProtocol {
+nonisolated protocol TaskRepositoryProtocol {
     func fetchAll() throws -> [ReminderTask]
     func save(_ task: ReminderTask) throws
     func delete(_ task: ReminderTask) throws

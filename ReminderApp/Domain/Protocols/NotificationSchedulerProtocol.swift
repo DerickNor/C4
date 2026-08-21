@@ -12,7 +12,7 @@
 //  • DIP — Domain tidak pernah menyentuh UNUserNotificationCenter langsung.
 //
 
-protocol NotificationSchedulerProtocol {
+nonisolated protocol NotificationSchedulerProtocol {
     func schedule(for task: ReminderTask) async throws
     func cancel(for task: ReminderTask)
 }
