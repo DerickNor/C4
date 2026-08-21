@@ -1,6 +1,25 @@
+# Xcode — build products
+build/
+DerivedData/
 
-# Dokumen planning & konteks AI — nggak ikut di-commit ke repo
-AGENT.md
-spec.md
-task.md
-TOOLING.md
+# Xcode — per-user state (berbeda tiap mesin, jangan di-share)
+xcuserdata/
+*.xcuserstate
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.perspectivev3
+!default.perspectivev3
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Build artefacts
+*.hmap
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# macOS
+.DS_Store
