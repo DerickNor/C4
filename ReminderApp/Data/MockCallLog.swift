@@ -3,36 +3,22 @@
 //  ReminderApp · Data
 //
 //  TUGAS
-//  Buku catatan bersama untuk semua Mock — satu timeline tunggal yang
-//  merekam kejadian dari MockTaskRepository DAN MockNotificationScheduler
-//  sekaligus, bukan dua catatan terpisah.
-//
-//  Kenapa harus satu: DeleteTaskUseCase memanggil scheduler.cancel(for:)
-//  lalu repository.delete(_:). Kalau masing-masing Mock punya buku
-//  catatannya sendiri, tidak ada cara membuktikan urutan ANTAR keduanya —
-//  paling jauh cuma bisa membuktikan "cancel kepanggil" dan "delete
-//  kepanggil" secara terpisah, bukan cancel-lah-yang-lebih-dulu. Dengan
-//  satu log yang disuntik ke dua Mock sekaligus, urutan aslinya kebaca
-//  langsung dari satu array.
+//  Satu timeline bersama untuk MockTaskRepository dan MockNotificationScheduler,
+//  supaya urutan panggilan ANTAR keduanya bisa dibuktikan — bukan cuma
+//  masing-masing dibuktikan terpisah.
 //
 //  PERAN DI SOLID
-//  • DIP — ada karena kedua Mock sama-sama cuma implementasi dari
-//    protocol; log ini tidak tahu-menahu SwiftData atau UNUserNotificationCenter.
+//  • DIP — kedua Mock sama-sama cuma implementasi protocol; log ini tidak
+//    tahu-menahu SwiftData atau UNUserNotificationCenter.
 //
-//  CONTOH PEMAKAIAN — begini cara kerjanya secara konkret:
+//  Contoh pemakaian:
 //
 //      let log = MockCallLog()
-//      let repository = MockTaskRepository(log: log)        // ← log yang sama...
-//      let scheduler = MockNotificationScheduler(log: log)   // ← ...disuntik ke dua-duanya
-//
+//      let repository = MockTaskRepository(log: log)
+//      let scheduler = MockNotificationScheduler(log: log)
 //      scheduler.cancel(for: task)
 //      try repository.delete(task)
-//
-//      log.entries   // [.cancel(task), .delete(task)] — urutan ASLI kebaca dari sini
-//
-//  Tanpa `log:` disuntik, tiap Mock otomatis dapat MockCallLog kosong miliknya
-//  sendiri (lihat default value di init masing-masing) — cukup untuk test yang
-//  cuma butuh satu Mock dan tidak peduli urutan lintas-Mock.
+//      log.entries   // [.cancel(task), .delete(task)]
 //
 
 final class MockCallLog {

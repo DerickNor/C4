@@ -3,14 +3,9 @@
 //  ReminderApp · Data
 //
 //  TUGAS
-//  Implementasi in-memory yang mencatat method apa saja yang dipanggil dan urutannya.
-//  Dipakai unit test dan SwiftUI Preview.
-//
-//  Catatan urutan ditulis ke MockCallLog, bukan array privat sendiri —
-//  supaya bisa berbagi satu timeline dengan MockNotificationScheduler
-//  waktu keduanya disuntik ke DeleteTaskUseCase yang sama (lihat
-//  MockCallLog.swift). Kalau tidak disuntik log khusus, tiap instance
-//  otomatis dapat log sendiri — cukup untuk test yang cuma perlu satu Mock.
+//  Implementasi in-memory dari TaskRepositoryProtocol. Dipakai unit test
+//  dan SwiftUI Preview. Urutan panggilan dicatat ke MockCallLog (lihat
+//  file itu) supaya bisa dibandingkan dengan panggilan di MockNotificationScheduler.
 //
 //  PERAN DI SOLID
 //  • LSP — inilah buktinya. Bisa menggantikan SwiftDataTaskRepository
@@ -30,12 +25,12 @@ final class MockTaskRepository: TaskRepositoryProtocol {
     }
 
     func fetchAll() throws -> [ReminderTask] {
-        log.record(.fetchAll)   // ← tercatat di timeline bersama (lihat MockCallLog.swift)
+        log.record(.fetchAll)
         return tasks
     }
 
     func save(_ task: ReminderTask) throws {
-        log.record(.save(task))   // ← tercatat DULU, baru upsert — urutan record = urutan panggilan asli
+        log.record(.save(task))
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index] = task   // update: id sudah ada
         } else {
@@ -43,8 +38,12 @@ final class MockTaskRepository: TaskRepositoryProtocol {
         }
     }
 
+    // Dipanggil DeleteTaskUseCase setelah scheduler.cancel(for:). Karena
+    // dua-duanya menulis ke MockCallLog yang sama, DeleteTaskUseCaseTests
+    // nanti tinggal cek log.entries dan pastikan .cancel muncul sebelum
+    // .delete — bukan cuma cek dua-duanya kepanggil.
     func delete(_ task: ReminderTask) throws {
-        log.record(.delete(task))   // ← titik ini yang dibaca test ordering cancel-vs-delete
+        log.record(.delete(task))
         tasks.removeAll { $0.id == task.id }
     }
 }
