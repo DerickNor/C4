@@ -30,21 +30,21 @@ final class MockTaskRepository: TaskRepositoryProtocol {
     }
 
     func fetchAll() throws -> [ReminderTask] {
-        log.record(.fetchAll)
+        log.record(.fetchAll)   // ← tercatat di timeline bersama (lihat MockCallLog.swift)
         return tasks
     }
 
     func save(_ task: ReminderTask) throws {
-        log.record(.save(task))
+        log.record(.save(task))   // ← tercatat DULU, baru upsert — urutan record = urutan panggilan asli
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
-            tasks[index] = task
+            tasks[index] = task   // update: id sudah ada
         } else {
-            tasks.append(task)
+            tasks.append(task)   // insert: id baru
         }
     }
 
     func delete(_ task: ReminderTask) throws {
-        log.record(.delete(task))
+        log.record(.delete(task))   // ← titik ini yang dibaca test ordering cancel-vs-delete
         tasks.removeAll { $0.id == task.id }
     }
 }

@@ -31,10 +31,10 @@ final class MockNotificationScheduler: NotificationSchedulerProtocol {
     }
 
     func schedule(for task: ReminderTask) async throws {
-        log.record(.schedule(task))
+        log.record(.schedule(task))   // ← tercatat di timeline bersama (lihat MockCallLog.swift)
     }
 
     func cancel(for task: ReminderTask) {
-        log.record(.cancel(task))
+        log.record(.cancel(task))   // ← titik ini yang dibaca test ordering cancel-vs-delete
     }
 }
