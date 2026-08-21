@@ -30,12 +30,12 @@ final class MockCallLog {
         case cancel(ReminderTask)
     }
 
-    /// Timeline aktualnya. Urutan array = urutan kejadian sebenarnya,
-    /// karena `record(_:)` cuma append — tidak pernah insert/reorder.
+    /// Daftar semua kejadian, berurutan sesuai kapan terjadinya.
     private(set) var entries: [Entry] = []
 
-    /// Dipanggil dari dalam MockTaskRepository & MockNotificationScheduler
-    /// setiap method protocol-nya jalan. Inilah satu-satunya titik tulis.
+    /// Menambahkan satu kejadian ke akhir daftar. Dipanggil MockTaskRepository
+    /// dan MockNotificationScheduler tiap kali salah satu method mereka
+    /// (fetchAll, save, delete, schedule, cancel) dijalankan.
     func record(_ entry: Entry) {
         entries.append(entry)
     }
