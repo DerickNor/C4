@@ -3,9 +3,10 @@
 //  ReminderApp · Data
 //
 //  TUGAS
-//  Mencatat id mana yang dijadwalkan dan mana yang dibatalkan, lengkap dengan urutannya.
-//  Ditulis lebih dulu (TDD) — file ini dan test-nya ada duluan, baru
-//  DeleteTaskUseCase diimplementasikan menyesuaikan kontrak yang sudah dites.
+//  Implementasi in-memory dari NotificationSchedulerProtocol. Mencatat id
+//  yang dijadwalkan/dibatalkan ke MockCallLog yang sama dipakai
+//  MockTaskRepository (lihat file itu), supaya urutan cancel-vs-delete
+//  bisa dibandingkan lintas dua Mock.
 //
 //  PERAN DI SOLID
 //  • DIP — DeleteTaskUseCase cuma kenal NotificationSchedulerProtocol (jabatan),
@@ -17,3 +18,23 @@
 //
 //  DIP bikin penggantian ini mungkin, LSP bikin hasilnya bisa dipercaya.
 //
+
+final class MockNotificationScheduler: NotificationSchedulerProtocol {
+    private let log: MockCallLog
+
+    init(log: MockCallLog = MockCallLog()) {
+        self.log = log
+    }
+
+    func schedule(for task: ReminderTask) async throws {
+        log.record(.schedule(task))
+    }
+
+    // Dipanggil DeleteTaskUseCase SEBELUM repository.delete(_:). Karena
+    // dua-duanya menulis ke MockCallLog yang sama, DeleteTaskUseCaseTests
+    // nanti tinggal cek log.entries dan pastikan .cancel muncul sebelum
+    // .delete — bukan cuma cek dua-duanya kepanggil.
+    func cancel(for task: ReminderTask) {
+        log.record(.cancel(task))
+    }
+}
