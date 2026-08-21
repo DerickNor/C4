@@ -23,21 +23,17 @@
 /* Begin PBXFileReference section */
 		32F545CE3036E3D0002F69F5 /* ReminderApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReminderApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84DA11DCC920CFF8A0469BAE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		F0ACE92EE956985B9E494D79 /* ReminderAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = ReminderAppTests.xctest; path = ReminderAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0ACE92EE956985B9E494D79 /* ReminderAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReminderAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		32F545D03036E3D0002F69F5 /* ReminderApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = ReminderApp;
 			sourceTree = "<group>";
 		};
 		85249BCF7E9930F5B91ED190 /* ReminderAppTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = ReminderAppTests;
 			sourceTree = "<group>";
 		};
