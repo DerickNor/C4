@@ -19,6 +19,8 @@ nonisolated struct TogglePinUseCase {
     }
 
     func execute(_ task: ReminderTask) throws {
-        fatalError("not implemented")
+        var updated = task
+        updated.isPinned.toggle()
+        try repository.save(updated)
     }
 }
