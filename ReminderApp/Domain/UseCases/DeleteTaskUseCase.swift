@@ -22,6 +22,7 @@ nonisolated struct DeleteTaskUseCase {
     }
 
     func execute(_ task: ReminderTask) throws {
-        fatalError("not implemented")
+        scheduler.cancel(for: task)
+        try repository.delete(task)
     }
 }
