@@ -11,3 +11,17 @@
 //  • SRP — hanya mengurus alur penghapusan.
 //  • DIP — memakai dua protocol, tidak tahu SwiftData maupun UNUserNotificationCenter.
 //
+
+nonisolated struct DeleteTaskUseCase {
+    private let repository: TaskRepositoryProtocol
+    private let scheduler: NotificationSchedulerProtocol
+
+    init(repository: TaskRepositoryProtocol, scheduler: NotificationSchedulerProtocol) {
+        self.repository = repository
+        self.scheduler = scheduler
+    }
+
+    func execute(_ task: ReminderTask) throws {
+        fatalError("not implemented")
+    }
+}
