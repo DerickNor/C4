@@ -10,3 +10,15 @@
 //  • SRP — satu aksi, satu alasan untuk berubah.
 //  • ISP — cukup menerima TaskRepositoryProtocol saja, tanpa scheduler.
 //
+
+nonisolated struct TogglePinUseCase {
+    private let repository: TaskRepositoryProtocol
+
+    init(repository: TaskRepositoryProtocol) {
+        self.repository = repository
+    }
+
+    func execute(_ task: ReminderTask) throws {
+        fatalError("not implemented")
+    }
+}
