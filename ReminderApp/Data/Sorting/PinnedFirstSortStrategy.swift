@@ -10,3 +10,9 @@
 //  • OCP — TaskListViewModel tidak tahu file ini ada. Menambah urutan lain
 //    cukup bikin file baru yang ikut TaskSortStrategy.
 //
+
+nonisolated struct PinnedFirstSortStrategy: TaskSortStrategy {
+    func sort(_ tasks: [ReminderTask]) -> [ReminderTask] {
+        tasks
+    }
+}
