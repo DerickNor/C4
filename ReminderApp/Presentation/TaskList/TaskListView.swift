@@ -41,25 +41,41 @@ private struct TaskRow: View {
     let onPinTapped: () -> Void
 
     var body: some View {
-        HStack {
+        HStack(spacing: 12) {
             Button(action: onPinTapped) {
                 Image(systemName: task.isPinned ? "pin.fill" : "pin")
+                    .foregroundStyle(task.isPinned ? .orange : .secondary)
+                    // Ikon boleh kecil, tapi area sentuh tetap wajib ≥44×44pt (HIG).
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
 
-            Text(task.title)
-                .strikethrough(task.isCompleted)
-                .foregroundStyle(task.isCompleted ? .secondary : .primary)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(task.title)
+                    .strikethrough(task.isCompleted)
+                    .foregroundStyle(task.isCompleted ? .secondary : .primary)
+
+                // Format sistem (bukan string manual) — otomatis ikut format
+                // tanggal/jam lokal user, sesuai anjuran HIG.
+                Text(task.dueDate, format: .dateTime.day().month(.abbreviated).year().hour().minute())
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
 
             Spacer()
         }
+        .padding(.vertical, 6)
     }
 }
 
 #Preview {
+    let now = Date()
     let repository = MockTaskRepository(tasks: [
-        ReminderTask(title: "Bayar listrik", dueDate: Date().addingTimeInterval(3600), isPinned: true),
-        ReminderTask(title: "Rapat tim", dueDate: Date().addingTimeInterval(7200))
+        ReminderTask(title: "Bayar listrik", dueDate: now.addingTimeInterval(3600), isPinned: true),
+        ReminderTask(title: "Rapat tim", dueDate: now.addingTimeInterval(86400), isPinned: true),
+        ReminderTask(title: "Beli susu", dueDate: now.addingTimeInterval(1800)),
+        ReminderTask(title: "Cuci motor", dueDate: now.addingTimeInterval(172800), isCompleted: true)
     ])
     let scheduler = MockNotificationScheduler()
     let viewModel = TaskListViewModel(
