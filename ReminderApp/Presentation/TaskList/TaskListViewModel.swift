@@ -11,10 +11,10 @@
 //  • OCP — urutan ditentukan strategy yang disuntik; tidak ada switch di sini.
 //  • SRP — hanya state UI. Aturan bisnis tetap di UseCase.
 //
-//  Status: stub TDD 🔴 — sengaja TIDAK ditandai nonisolated seperti tipe
-//  Domain. Ini ViewModel sungguhan (@Published), jadi @MainActor bawaan
-//  modul memang tepat di sini. Yang disesuaikan untuk Swift Testing adalah
-//  test suite-nya (ditandai @MainActor), bukan tipe ini.
+//  Sengaja TIDAK ditandai nonisolated seperti tipe Domain. Ini ViewModel
+//  sungguhan (@Published), jadi @MainActor bawaan modul memang tepat di
+//  sini. Yang disesuaikan untuk Swift Testing adalah test suite-nya
+//  (ditandai @MainActor), bukan tipe ini.
 
 import Combine
 import Foundation
@@ -40,18 +40,24 @@ final class TaskListViewModel: ObservableObject {
     }
 
     func loadTasks() {
-        fatalError("not implemented")
+        guard let fetched = try? repository.fetchAll() else { return }
+        tasks = sortStrategy.sort(fetched)
     }
 
     func onPinTapped(_ task: ReminderTask) {
-        fatalError("not implemented")
+        try? togglePinUseCase.execute(task)
+        loadTasks()
     }
 
     func onCompleteTapped(_ task: ReminderTask) {
-        fatalError("not implemented")
+        var updated = task
+        updated.isCompleted.toggle()
+        try? repository.save(updated)
+        loadTasks()
     }
 
     func onDeleteTapped(_ task: ReminderTask) {
-        fatalError("not implemented")
+        try? deleteTaskUseCase.execute(task)
+        loadTasks()
     }
 }
