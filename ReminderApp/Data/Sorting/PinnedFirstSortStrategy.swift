@@ -13,6 +13,11 @@
 
 nonisolated struct PinnedFirstSortStrategy: TaskSortStrategy {
     func sort(_ tasks: [ReminderTask]) -> [ReminderTask] {
-        tasks
+        tasks.sorted { lhs, rhs in
+            if lhs.isPinned != rhs.isPinned {
+                return lhs.isPinned
+            }
+            return lhs.dueDate < rhs.dueDate
+        }
     }
 }
