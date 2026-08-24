@@ -11,3 +11,22 @@
 //    Memindahkan validasi ke sini akan menduplikasi aturan di dua tempat.
 //  • DIP — menerima use case lewat init(), bukan membuatnya sendiri.
 //
+
+import Combine
+import Foundation
+
+final class AddTaskViewModel: ObservableObject {
+    @Published var title: String = ""
+    @Published var dueDate: Date = Date().addingTimeInterval(3600)
+    @Published private(set) var errorMessage: String?
+
+    private let addTaskUseCase: AddTaskUseCase
+
+    init(addTaskUseCase: AddTaskUseCase) {
+        self.addTaskUseCase = addTaskUseCase
+    }
+
+    func submit() async {
+        fatalError("not implemented")
+    }
+}
