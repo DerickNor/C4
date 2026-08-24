@@ -27,6 +27,15 @@ final class AddTaskViewModel: ObservableObject {
     }
 
     func submit() async {
-        fatalError("not implemented")
+        do {
+            _ = try await addTaskUseCase.execute(title: title, dueDate: dueDate)
+            errorMessage = nil
+        } catch ValidationError.emptyTitle {
+            errorMessage = "Judul tidak boleh kosong."
+        } catch ValidationError.pastDueDate {
+            errorMessage = "Waktu pengingat tidak boleh di masa lalu."
+        } catch {
+            errorMessage = "Terjadi kesalahan tak terduga."
+        }
     }
 }
