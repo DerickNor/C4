@@ -83,5 +83,8 @@ private struct RootView: View {
                     }
                 }
         }
+        .task {
+            await scheduler.requestAuthorization()
+        }
     }
 }
