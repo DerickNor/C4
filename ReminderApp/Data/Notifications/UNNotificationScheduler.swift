@@ -21,6 +21,16 @@ final class UNNotificationScheduler: NotificationSchedulerProtocol {
         self.center = center
     }
 
+    /// Diminta sekali di composition root saat app launch (lihat `design.md` § Open
+    /// Questions — resolusi: at launch, bukan lazy di first task creation, supaya
+    /// `AddTaskUseCase` tidak perlu failure mode baru di luar `ValidationError`).
+    /// Bukan bagian dari `NotificationSchedulerProtocol`: ini urusan konkret
+    /// `UNUserNotificationCenter`, dan `MockNotificationScheduler` tidak butuh
+    /// meniru API izin sungguhan untuk tetap LSP-compliant.
+    func requestAuthorization() async {
+        _ = try? await center.requestAuthorization(options: [.alert, .sound, .badge])
+    }
+
     func schedule(for task: ReminderTask) async throws {
         let content = UNMutableNotificationContent()
         content.title = task.title
