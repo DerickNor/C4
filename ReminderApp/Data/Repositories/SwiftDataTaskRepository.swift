@@ -29,7 +29,7 @@ final class SwiftDataTaskRepository: TaskRepositoryProtocol {
     func save(_ task: ReminderTask) throws {
         let taskID = task.id
         let descriptor = FetchDescriptor<ReminderTaskRecord>(
-            predicate: #Predicate { $0.id == taskID }
+            predicate: #Predicate { $0.id == taskID },
         )
         if let existing = try modelContext.fetch(descriptor).first {
             existing.title = task.title
@@ -45,7 +45,7 @@ final class SwiftDataTaskRepository: TaskRepositoryProtocol {
     func delete(_ task: ReminderTask) throws {
         let taskID = task.id
         let descriptor = FetchDescriptor<ReminderTaskRecord>(
-            predicate: #Predicate { $0.id == taskID }
+            predicate: #Predicate { $0.id == taskID },
         )
         if let existing = try modelContext.fetch(descriptor).first {
             modelContext.delete(existing)

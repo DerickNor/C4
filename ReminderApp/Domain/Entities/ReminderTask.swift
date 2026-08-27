@@ -28,7 +28,7 @@ nonisolated struct ReminderTask: Identifiable, Equatable {
         title: String,
         dueDate: Date,
         isPinned: Bool = false,
-        isCompleted: Bool = false
+        isCompleted: Bool = false,
     ) {
         self.id = id
         self.title = title

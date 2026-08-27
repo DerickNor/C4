@@ -13,11 +13,13 @@
 //  • DIP — bukti bahwa UseCase memang bergantung ke protocol, bukan ke SwiftData.
 //
 
-nonisolated final class MockTaskRepository: TaskRepositoryProtocol {
+final nonisolated class MockTaskRepository: TaskRepositoryProtocol {
     private let log: MockCallLog
     private var tasks: [ReminderTask]
 
-    var calls: [MockCallLog.Entry] { log.entries }
+    var calls: [MockCallLog.Entry] {
+        log.entries
+    }
 
     init(tasks: [ReminderTask] = [], log: MockCallLog = MockCallLog()) {
         self.tasks = tasks
@@ -32,16 +34,16 @@ nonisolated final class MockTaskRepository: TaskRepositoryProtocol {
     func save(_ task: ReminderTask) throws {
         log.record(.save(task))
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
-            tasks[index] = task   // update: id sudah ada
+            tasks[index] = task // update: id sudah ada
         } else {
-            tasks.append(task)   // insert: id baru
+            tasks.append(task) // insert: id baru
         }
     }
 
-    // Dipanggil DeleteTaskUseCase setelah scheduler.cancel(for:). Karena
-    // dua-duanya menulis ke MockCallLog yang sama, DeleteTaskUseCaseTests
-    // nanti tinggal cek log.entries dan pastikan .cancel muncul sebelum
-    // .delete — bukan cuma cek dua-duanya kepanggil.
+    /// Dipanggil DeleteTaskUseCase setelah scheduler.cancel(for:). Karena
+    /// dua-duanya menulis ke MockCallLog yang sama, DeleteTaskUseCaseTests
+    /// nanti tinggal cek log.entries dan pastikan .cancel muncul sebelum
+    /// .delete — bukan cuma cek dua-duanya kepanggil.
     func delete(_ task: ReminderTask) throws {
         log.record(.delete(task))
         tasks.removeAll { $0.id == task.id }

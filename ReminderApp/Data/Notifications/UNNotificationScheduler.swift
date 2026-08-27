@@ -42,7 +42,7 @@ final class UNNotificationScheduler: NotificationSchedulerProtocol {
         let request = UNNotificationRequest(
             identifier: task.id.uuidString,
             content: content,
-            trigger: trigger
+            trigger: trigger,
         )
         try await center.add(request)
     }

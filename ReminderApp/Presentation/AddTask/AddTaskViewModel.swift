@@ -17,7 +17,7 @@ import Foundation
 
 final class AddTaskViewModel: ObservableObject {
     @Published var title: String = ""
-    @Published var dueDate: Date = Date().addingTimeInterval(3600)
+    @Published var dueDate: Date = .init().addingTimeInterval(3600)
     @Published private(set) var errorMessage: String?
 
     private let addTaskUseCase: AddTaskUseCase

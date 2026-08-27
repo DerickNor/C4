@@ -25,6 +25,11 @@ force_cast:
 implicitly_unwrapped_optional:
   severity: warning
 
+# SwiftFormat's trailingCommas rule always adds a trailing comma on wrapped
+# multi-line calls — keep SwiftLint in agreement instead of fighting it.
+trailing_comma:
+  mandatory_comma: true
+
 line_length:
   warning: 120
   error: 160

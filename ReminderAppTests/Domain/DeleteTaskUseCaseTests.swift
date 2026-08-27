@@ -13,13 +13,13 @@
 //  Status: TDD 🔴 — ditulis sebelum DeleteTaskUseCase asli ada, jadi harus
 //  merah dulu (fatalError) sebelum TASK-016 mengisi logic-nya sampai hijau.
 
-import Testing
 import Foundation
 @testable import ReminderApp
+import Testing
 
 struct DeleteTaskUseCaseTests {
-    @Test("Task terhapus dari repository")
-    func execute_removesTaskFromRepository() throws {
+    @Test
+    func `Task terhapus dari repository`() throws {
         let task = ReminderTask(title: "Bayar listrik", dueDate: Date().addingTimeInterval(3600))
         let repository = MockTaskRepository(tasks: [task])
         let scheduler = MockNotificationScheduler()
@@ -30,11 +30,11 @@ struct DeleteTaskUseCaseTests {
         #expect(try repository.fetchAll().isEmpty)
     }
 
-    // Log yang sama disuntik ke repository DAN scheduler — kalau
-    // DeleteTaskUseCase membalik urutan (delete dulu, baru cancel),
-    // log.entries akan berbeda dan test ini gagal.
-    @Test("cancel tercatat sebelum delete di log bersama")
-    func execute_cancelsBeforeDeleting() throws {
+    /// Log yang sama disuntik ke repository DAN scheduler — kalau
+    /// DeleteTaskUseCase membalik urutan (delete dulu, baru cancel),
+    /// log.entries akan berbeda dan test ini gagal.
+    @Test
+    func `cancel tercatat sebelum delete di log bersama`() throws {
         let task = ReminderTask(title: "Bayar listrik", dueDate: Date().addingTimeInterval(3600))
         let log = MockCallLog()
         let repository = MockTaskRepository(tasks: [task], log: log)
