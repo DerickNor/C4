@@ -75,14 +75,14 @@ private struct TaskRow: View {
         ReminderTask(title: "Bayar listrik", dueDate: now.addingTimeInterval(3600), isPinned: true),
         ReminderTask(title: "Rapat tim", dueDate: now.addingTimeInterval(86400), isPinned: true),
         ReminderTask(title: "Beli susu", dueDate: now.addingTimeInterval(1800)),
-        ReminderTask(title: "Cuci motor", dueDate: now.addingTimeInterval(172800), isCompleted: true)
+        ReminderTask(title: "Cuci motor", dueDate: now.addingTimeInterval(172_800), isCompleted: true),
     ])
     let scheduler = MockNotificationScheduler()
     let viewModel = TaskListViewModel(
         repository: repository,
         togglePinUseCase: TogglePinUseCase(repository: repository),
         deleteTaskUseCase: DeleteTaskUseCase(repository: repository, scheduler: scheduler),
-        sortStrategy: PinnedFirstSortStrategy()
+        sortStrategy: PinnedFirstSortStrategy(),
     )
     return TaskListView(viewModel: viewModel)
 }

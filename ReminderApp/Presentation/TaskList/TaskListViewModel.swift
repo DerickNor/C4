@@ -31,7 +31,7 @@ final class TaskListViewModel: ObservableObject {
         repository: TaskRepositoryProtocol,
         togglePinUseCase: TogglePinUseCase,
         deleteTaskUseCase: DeleteTaskUseCase,
-        sortStrategy: TaskSortStrategy
+        sortStrategy: TaskSortStrategy,
     ) {
         self.repository = repository
         self.togglePinUseCase = togglePinUseCase

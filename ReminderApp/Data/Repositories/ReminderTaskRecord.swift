@@ -25,11 +25,11 @@ final class ReminderTaskRecord {
     var isCompleted: Bool
 
     init(from task: ReminderTask) {
-        self.id = task.id
-        self.title = task.title
-        self.dueDate = task.dueDate
-        self.isPinned = task.isPinned
-        self.isCompleted = task.isCompleted
+        id = task.id
+        title = task.title
+        dueDate = task.dueDate
+        isPinned = task.isPinned
+        isCompleted = task.isCompleted
     }
 
     func toDomain() -> ReminderTask {

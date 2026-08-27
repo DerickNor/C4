@@ -13,9 +13,9 @@
 //  Status: TDD 🔴 — ditulis sebelum AddTaskViewModel asli ada, jadi harus
 //  merah dulu (fatalError) sebelum TASK-027 mengisi logic-nya sampai hijau.
 
-import Testing
 import Foundation
 @testable import ReminderApp
+import Testing
 
 @MainActor
 struct AddTaskViewModelTests {
@@ -32,8 +32,8 @@ struct AddTaskViewModelTests {
         return Environment(viewModel: viewModel, repository: repository)
     }
 
-    @Test("Submit valid mengosongkan errorMessage")
-    func submit_validInput_clearsErrorMessage() async {
+    @Test
+    func `Submit valid mengosongkan errorMessage`() async {
         let env = makeSUT()
         env.viewModel.title = "Bayar listrik"
         env.viewModel.dueDate = Date().addingTimeInterval(3600)
@@ -43,8 +43,8 @@ struct AddTaskViewModelTests {
         #expect(env.viewModel.errorMessage == nil)
     }
 
-    @Test("Submit judul kosong mengisi errorMessage")
-    func submit_emptyTitle_setsErrorMessage() async {
+    @Test
+    func `Submit judul kosong mengisi errorMessage`() async {
         let env = makeSUT()
         env.viewModel.title = ""
         env.viewModel.dueDate = Date().addingTimeInterval(3600)
@@ -54,8 +54,8 @@ struct AddTaskViewModelTests {
         #expect(env.viewModel.errorMessage != nil)
     }
 
-    @Test("Submit dueDate lampau mengisi errorMessage")
-    func submit_pastDueDate_setsErrorMessage() async {
+    @Test
+    func `Submit dueDate lampau mengisi errorMessage`() async {
         let env = makeSUT()
         env.viewModel.title = "Valid"
         env.viewModel.dueDate = Date().addingTimeInterval(-3600)
@@ -65,10 +65,10 @@ struct AddTaskViewModelTests {
         #expect(env.viewModel.errorMessage != nil)
     }
 
-    // Ini yang sesungguhnya diminta REQ-014: dua pesan error harus BISA
-    // DIBEDAKAN, bukan cuma sama-sama "ada pesan error".
-    @Test("Pesan error judul kosong dan dueDate lampau harus berbeda")
-    func submit_emptyTitleAndPastDueDate_produceDistinctMessages() async {
+    /// Ini yang sesungguhnya diminta REQ-014: dua pesan error harus BISA
+    /// DIBEDAKAN, bukan cuma sama-sama "ada pesan error".
+    @Test
+    func `Pesan error judul kosong dan dueDate lampau harus berbeda`() async {
         let emptyTitleEnv = makeSUT()
         emptyTitleEnv.viewModel.title = ""
         emptyTitleEnv.viewModel.dueDate = Date().addingTimeInterval(3600)

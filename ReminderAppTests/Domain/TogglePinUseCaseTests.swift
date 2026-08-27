@@ -12,13 +12,13 @@
 //  Status: TDD 🔴 — ditulis sebelum TogglePinUseCase asli ada, jadi harus
 //  merah dulu (fatalError) sebelum TASK-014 mengisi logic-nya sampai hijau.
 
-import Testing
 import Foundation
 @testable import ReminderApp
+import Testing
 
 struct TogglePinUseCaseTests {
-    @Test("Pin task: isPinned jadi true, field lain tidak berubah")
-    func executeOnUnpinnedTask_flipsIsPinnedToTrue() throws {
+    @Test
+    func `Pin task: isPinned jadi true, field lain tidak berubah`() throws {
         let repository = MockTaskRepository()
         let sut = TogglePinUseCase(repository: repository)
         let original = ReminderTask(title: "Bayar listrik", dueDate: Date().addingTimeInterval(3600), isPinned: false)
@@ -30,8 +30,8 @@ struct TogglePinUseCaseTests {
         #expect(try repository.fetchAll() == [expected])
     }
 
-    @Test("Unpin task: isPinned jadi false, field lain tidak berubah")
-    func executeOnPinnedTask_flipsIsPinnedToFalse() throws {
+    @Test
+    func `Unpin task: isPinned jadi false, field lain tidak berubah`() throws {
         let repository = MockTaskRepository()
         let sut = TogglePinUseCase(repository: repository)
         let original = ReminderTask(title: "Bayar listrik", dueDate: Date().addingTimeInterval(3600), isPinned: true)
@@ -43,8 +43,8 @@ struct TogglePinUseCaseTests {
         #expect(try repository.fetchAll() == [expected])
     }
 
-    @Test("title, dueDate, dan isCompleted tidak berubah setelah toggle")
-    func execute_doesNotMutateOtherFields() throws {
+    @Test
+    func `title, dueDate, dan isCompleted tidak berubah setelah toggle`() throws {
         let repository = MockTaskRepository()
         let sut = TogglePinUseCase(repository: repository)
         let dueDate = Date().addingTimeInterval(7200)

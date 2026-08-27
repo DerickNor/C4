@@ -1,0 +1,7 @@
+# Test functions are named as full Indonesian sentences in backticks per
+# SwiftFormat's swiftTestingTestCaseNames rule (see CLAUDE.md § Testing) —
+# identifier_name's lowerCamelCase check doesn't apply to them.
+parent_config: ../.swiftlint.yml
+
+disabled_rules:
+  - identifier_name

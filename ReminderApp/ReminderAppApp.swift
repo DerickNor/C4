@@ -59,7 +59,7 @@ private struct RootView: View {
             repository: repository,
             togglePinUseCase: TogglePinUseCase(repository: repository),
             deleteTaskUseCase: DeleteTaskUseCase(repository: repository, scheduler: scheduler),
-            sortStrategy: PinnedFirstSortStrategy()
+            sortStrategy: PinnedFirstSortStrategy(),
         ))
     }
 
@@ -75,8 +75,8 @@ private struct RootView: View {
                 .sheet(isPresented: $isAddingTask) {
                     AddTaskView(
                         viewModel: AddTaskViewModel(
-                            addTaskUseCase: AddTaskUseCase(repository: repository, scheduler: scheduler)
-                        )
+                            addTaskUseCase: AddTaskUseCase(repository: repository, scheduler: scheduler),
+                        ),
                     )
                     .onDisappear {
                         taskListViewModel.loadTasks()

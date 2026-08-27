@@ -15,13 +15,13 @@
 //
 //  Pakai Swift Testing (import Testing), bukan XCTest.
 
-import Testing
 import Foundation
 @testable import ReminderApp
+import Testing
 
 struct AddTaskUseCaseTests {
-    // Instance baru tiap test lewat factory ini, bukan properti suite —
-    // supaya tiap @Test dapat Mock yang bersih dan terisolasi.
+    /// Instance baru tiap test lewat factory ini, bukan properti suite —
+    /// supaya tiap @Test dapat Mock yang bersih dan terisolasi.
     private struct Environment {
         let sut: AddTaskUseCase
         let repository: MockTaskRepository
@@ -35,8 +35,8 @@ struct AddTaskUseCaseTests {
         return Environment(sut: sut, repository: repository, scheduler: scheduler)
     }
 
-    @Test("Judul kosong throw emptyTitle, tidak menyimpan, tidak menjadwalkan")
-    func emptyTitleThrowsEmptyTitle() async throws {
+    @Test
+    func `Judul kosong throw emptyTitle, tidak menyimpan, tidak menjadwalkan`() async throws {
         let env = makeSUT()
         await #expect(throws: ValidationError.emptyTitle) {
             _ = try await env.sut.execute(title: "", dueDate: Date().addingTimeInterval(3600))
@@ -45,23 +45,23 @@ struct AddTaskUseCaseTests {
         #expect(env.scheduler.calls.isEmpty)
     }
 
-    @Test("Judul spasi saja throw emptyTitle")
-    func whitespaceOnlyTitleThrowsEmptyTitle() async throws {
+    @Test
+    func `Judul spasi saja throw emptyTitle`() async throws {
         let env = makeSUT()
         await #expect(throws: ValidationError.emptyTitle) {
             _ = try await env.sut.execute(title: "   ", dueDate: Date().addingTimeInterval(3600))
         }
     }
 
-    @Test("Spasi di awal/akhir judul di-trim sebelum disimpan")
-    func titleWithSurroundingWhitespaceIsTrimmed() async throws {
+    @Test
+    func `Spasi di awal/akhir judul di-trim sebelum disimpan`() async throws {
         let env = makeSUT()
         let task = try await env.sut.execute(title: "  Buy milk  ", dueDate: Date().addingTimeInterval(3600))
         #expect(task.title == "Buy milk")
     }
 
-    @Test("dueDate di masa lalu throw pastDueDate, tidak menyimpan, tidak menjadwalkan")
-    func pastDueDateThrowsPastDueDate() async throws {
+    @Test
+    func `dueDate di masa lalu throw pastDueDate, tidak menyimpan, tidak menjadwalkan`() async throws {
         let env = makeSUT()
         await #expect(throws: ValidationError.pastDueDate) {
             _ = try await env.sut.execute(title: "Valid", dueDate: Date().addingTimeInterval(-3600))
@@ -70,8 +70,8 @@ struct AddTaskUseCaseTests {
         #expect(env.scheduler.calls.isEmpty)
     }
 
-    @Test("Input valid tersimpan dengan isPinned/isCompleted false")
-    func validInputPersistsTask() async throws {
+    @Test
+    func `Input valid tersimpan dengan isPinned/isCompleted false`() async throws {
         let env = makeSUT()
         let dueDate = Date().addingTimeInterval(3600)
         let task = try await env.sut.execute(title: "Bayar listrik", dueDate: dueDate)
@@ -81,8 +81,8 @@ struct AddTaskUseCaseTests {
         #expect(try env.repository.fetchAll() == [task])
     }
 
-    @Test("Input valid menjadwalkan reminder tepat sekali")
-    func validInputSchedulesExactlyOnce() async throws {
+    @Test
+    func `Input valid menjadwalkan reminder tepat sekali`() async throws {
         let env = makeSUT()
         let task = try await env.sut.execute(title: "Bayar listrik", dueDate: Date().addingTimeInterval(3600))
         #expect(env.scheduler.calls == [.schedule(task)])

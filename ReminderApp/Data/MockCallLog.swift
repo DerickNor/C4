@@ -21,7 +21,7 @@
 //      log.entries   // [.cancel(task), .delete(task)]
 //
 
-nonisolated final class MockCallLog {
+final nonisolated class MockCallLog {
     enum Entry: Equatable {
         case fetchAll
         case save(ReminderTask)

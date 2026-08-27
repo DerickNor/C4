@@ -18,9 +18,9 @@
 //  perlakuan dari test Domain, karena ViewModel ini memang seharusnya
 //  terikat UI thread (lihat header TaskListViewModel.swift).
 
-import Testing
 import Foundation
 @testable import ReminderApp
+import Testing
 
 @MainActor
 struct TaskListViewModelTests {
@@ -31,7 +31,7 @@ struct TaskListViewModelTests {
 
     private func makeSUT(
         tasks: [ReminderTask] = [],
-        sortStrategy: TaskSortStrategy = SpySortStrategy()
+        sortStrategy: TaskSortStrategy = SpySortStrategy(),
     ) -> Environment {
         let repository = MockTaskRepository(tasks: tasks)
         let scheduler = MockNotificationScheduler()
@@ -39,13 +39,13 @@ struct TaskListViewModelTests {
             repository: repository,
             togglePinUseCase: TogglePinUseCase(repository: repository),
             deleteTaskUseCase: DeleteTaskUseCase(repository: repository, scheduler: scheduler),
-            sortStrategy: sortStrategy
+            sortStrategy: sortStrategy,
         )
         return Environment(viewModel: viewModel, repository: repository)
     }
 
-    @Test("loadTasks() mengisi tasks dari repository")
-    func loadTasks_populatesFromRepository() {
+    @Test
+    func `loadTasks() mengisi tasks dari repository`() {
         let task = ReminderTask(title: "Bayar listrik", dueDate: Date().addingTimeInterval(3600))
         let env = makeSUT(tasks: [task])
 
@@ -54,10 +54,10 @@ struct TaskListViewModelTests {
         #expect(env.viewModel.tasks == [task])
     }
 
-    @Test("onPinTapped menyimpan perubahan lewat repository dan me-refresh tasks")
-    func onPinTapped_persistsChangeAndRefreshesTasks() throws {
+    @Test
+    func `onPinTapped menyimpan perubahan lewat repository dan me-refresh tasks`() throws {
         let task = ReminderTask(
-            title: "Bayar listrik", dueDate: Date().addingTimeInterval(3600), isPinned: false
+            title: "Bayar listrik", dueDate: Date().addingTimeInterval(3600), isPinned: false,
         )
         let env = makeSUT(tasks: [task])
         env.viewModel.loadTasks()
@@ -70,11 +70,11 @@ struct TaskListViewModelTests {
         #expect(env.viewModel.tasks.first?.isPinned == true)
     }
 
-    // Bukti OCP: SpySortStrategy membalik urutan, bukan mengurutkannya.
-    // Kalau TaskListViewModel diam-diam menyortir sendiri (bukan lewat
-    // strategy yang disuntik), hasilnya TIDAK akan terbalik seperti ini.
-    @Test("Menyuntik SpySortStrategy membalik urutan tanpa mengubah ViewModel")
-    func loadTasks_withSpySortStrategy_producesReversedOrder() {
+    /// Bukti OCP: SpySortStrategy membalik urutan, bukan mengurutkannya.
+    /// Kalau TaskListViewModel diam-diam menyortir sendiri (bukan lewat
+    /// strategy yang disuntik), hasilnya TIDAK akan terbalik seperti ini.
+    @Test
+    func `Menyuntik SpySortStrategy membalik urutan tanpa mengubah ViewModel`() {
         let taskA = ReminderTask(title: "A", dueDate: Date().addingTimeInterval(3600))
         let taskB = ReminderTask(title: "B", dueDate: Date().addingTimeInterval(7200))
         let spy = SpySortStrategy()
