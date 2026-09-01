@@ -9,6 +9,13 @@ import SQLite3
 enum InsecureCrypto {
     static let dbPassword = "admin123"
     static let apiToken = "abc123xyz"
+    /// Longer/higher-entropy value, to test whether S2068/S6418 need a length or
+    /// entropy threshold to fire (the two short values above did not trigger them).
+    /// Deliberately not shaped like any known provider's key format (e.g. Stripe's
+    /// "sk_live_" prefix) after GitHub's own push protection blocked that version
+    /// server-side as a real Stripe secret pattern - a third, independent layer of
+    /// defense beyond gitleaks and SonarCloud.
+    static let longFakeApiKey = "q7mZpX2vLk9tRb4wNc8sYh3fDj6uAe1gQoI5xVn" // gitleaks:allow
 
     static func weakHash(_ input: String) -> String {
         let digest = Insecure.MD5.hash(data: Data(input.utf8))
@@ -32,6 +39,24 @@ final class TrustAllCertificates: NSObject, URLSessionDelegate {
         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void,
     ) {
         completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
+    }
+}
+
+/// Alternate, more "textbook" variant of the same vulnerability: explicitly checks for
+/// the server-trust auth method (the canonical pattern shown in most write-ups of this
+/// bug) before unconditionally trusting it, instead of trusting on every challenge type.
+final class TrustAllCertificatesCanonical: NSObject, URLSessionDelegate {
+    func urlSession(
+        _: URLSession,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void,
+    ) {
+        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+            let credential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            completionHandler(.useCredential, credential)
+            return
+        }
+        completionHandler(.performDefaultHandling, nil)
     }
 }
 
