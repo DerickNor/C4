@@ -14,3 +14,5 @@ disabled_rules:
   - implicit_optional_initialization
   - legacy_random
   - function_parameter_count
+  - cyclomatic_complexity
+  - function_body_length
