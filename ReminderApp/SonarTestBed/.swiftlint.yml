@@ -1,0 +1,13 @@
+# This directory is a throwaway test bed (branch test/sonarcloud-security)
+# used to verify SonarCloud's own analyzer catches genuinely insecure Swift
+# patterns, independently of SwiftLint. Silencing SwiftLint here on purpose
+# so the pre-commit hook doesn't block the experiment; SonarCloud's native
+# Swift rules are unaffected by these directives.
+parent_config: ../../.swiftlint.yml
+
+disabled_rules:
+  - force_unwrapping
+  - identifier_name
+  - function_parameter_count
+  - cyclomatic_complexity
+  - function_body_length
